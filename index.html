@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Josh's Website</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.3/pixi.min.js"></script>
+
+    <style>
+        
+        @font-face {
+            font-family: "Arcade";
+            src: url('04B_03__.TTF');
+        }
+        html{
+            font-family: 'Arcade';
+        }
+        #canvas{
+            
+            width: 1200px;
+            height: 650px;
+            font-family: 'Arcade', 'monospace';
+            padding: 1.5%; 
+
+        }
+        body{
+            background-color: #212121;
+        }
+        
+        #cont{
+            text-align: center;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+
+
+        canvas{
+            font-family: 'Arcade', 'monospace';
+        }
+
+
+
+    </style>
+    <script>
+        let app;
+        let player;
+        let keys = {};
+        let keysDiv;
+        let playerSheet = {};
+        let intro;
+        let intro2;
+        let intro3;
+        let intro4;
+
+        window.onload = function(){
+
+            // stage
+            app = new PIXI.Application(
+                {
+                    width: 1200,
+                    height: 650,
+                    backgroundColor: 0x895d5d
+                }
+            );
+            document.getElementById("canvas").appendChild(app.view);
+
+            
+
+            // Main scene
+            // draw graphics
+            let graphics = new PIXI.Graphics();
+            let h = 117;
+            
+            // floor
+            graphics.beginFill(0xce9142);
+            graphics.drawRect(0, app.view.height*0.8, app.view.width, app.view.height*0.2);
+            graphics.endFill();
+            
+            app.stage.addChild(graphics);
+            
+            
+            // scene
+            playerSheet["scene"] = [
+                new PIXI.Texture.from("Scene/Scene_sky.png"),
+                new PIXI.Texture.from("Scene/Scene_sky2.png"),
+                new PIXI.Texture.from("Scene/Scene_sky3.png"),
+                new PIXI.Texture.from("Scene/Scene_sky4.png"),
+                new PIXI.Texture.from("Scene/Scene_sky5.png"),
+                new PIXI.Texture.from("Scene/Scene_sky6.png"),
+            ]
+            sky = new PIXI.AnimatedSprite(playerSheet.scene);
+            sky.x = 0;
+            sky.y = 0;
+            sky.animationSpeed = 0.012;
+            sky.loop = true;
+            sky.play();
+            app.stage.addChild(sky);
+
+            playerSheet["sun"] = [
+                new PIXI.Texture.from("Scene/sun.png"),
+                new PIXI.Texture.from("Scene/sun2.png"),
+                new PIXI.Texture.from("Scene/sun3.png"),
+                new PIXI.Texture.from("Scene/sun4.png"),
+            ]
+            sun = new PIXI.AnimatedSprite(playerSheet.sun);
+            sun.x = app.view.width * 0.98;
+            sun.y = app.view.height* 0.05;
+            sun.anchor.set(0.5);
+            sun.animationSpeed = 0.012;
+            sun.width = 160;
+            sun.height = 160;
+            sun.loop = true;
+            sun.play();
+            app.stage.addChild(sun);
+
+            // camp = new PIXI.Sprite.from("Scene/Scene_camp.png");
+            // camp.x = 240;
+            // camp.y = 423;
+            // app.stage.addChild(camp);
+
+            // camp2 = new PIXI.Sprite.from("Scene/Scene_camp2.png");
+            // camp2.x = 500;
+            // camp2.y = 423;
+            // app.stage.addChild(camp2);
+
+            tree = new PIXI.Sprite.from("Scene/Scene_tree.png");
+            tree.anchor.set(0.5);
+            tree.x = app.view.width * 0.1;
+            tree.y = app.view.height* 0.612;
+            app.stage.addChild(tree);
+
+            // tree2 = new PIXI.Sprite.from("Scene/Scene_tree2.png");
+            // tree2.anchor.set(0.5);
+            // tree2.x = 330;
+            // tree2.y = 325;
+            // app.stage.addChild(tree2);
+            
+            rock = new PIXI.Sprite.from("Scene/Scene_rock.png");
+            rock.x = 220;
+            rock.y = 502;
+            app.stage.addChild(rock);
+
+            grass = new PIXI.Sprite.from("Scene/Scene_grass.png");
+            grass.x = 400;
+            grass.y = 485;
+            app.stage.addChild(grass);
+
+                
+            boxes = new PIXI.Sprite.from("Scene/Scene_boxes.png");
+            boxes.anchor.set(0.5);
+            boxes.width = 140;
+            boxes.height = 240;
+            boxes.x = 1130;
+            boxes.y = 402;
+            app.stage.addChild(boxes);
+
+            
+            // text
+            text1 = new PIXI.Text("Welcome To Josh's Website!");
+            text1.x = app.view.width / 2;
+            text1.y = app.view.height * 0.05;
+            text1.anchor.set(0.5);
+            text1.style = new PIXI.TextStyle(
+                {
+                    fill: 0xc8c8c8, 
+                    fontFamily: '\'Arcade\', monospace', 
+                    fontSize: 50,
+                }
+            );
+
+
+            text2 = new PIXI.Text("About");
+            text2.x = 1130;
+            text2.y = 492;
+            text2.anchor.set(0.5);
+            text2.style = new PIXI.TextStyle(
+                {
+                    fontFamily: '\'Arcade\', monospace', 
+                    fill: 0xc8c3be, 
+                    fontSize: 35,
+                }
+
+            );
+
+            text3 = new PIXI.Text("Works");
+            text3.x = 1130;
+            text3.y = 432;
+            text3.anchor.set(0.5);
+            text3.style = new PIXI.TextStyle(
+                {
+                    fontFamily: '\'Arcade\', monospace', 
+                    fill: 0xc8c3be, 
+                    fontSize: 35,
+                }
+
+            );
+
+            text4 = new PIXI.Text("Social");
+            text4.x = 1130;
+            text4.y = 372;
+            text4.anchor.set(0.5);
+            text4.style = new PIXI.TextStyle(
+                {
+                    fontFamily: '\'Arcade\', monospace', 
+                    fill: 0xc8c3be, 
+                    fontSize: 32,
+                }
+
+            );
+
+            text5 = new PIXI.Text("Contact");
+            text5.x = 1130;
+            text5.y = 312;
+            text5.anchor.set(0.5);
+            text5.style = new PIXI.TextStyle(
+                {
+                    fontFamily: '\'Arcade\', monospace', 
+                    fill: 0xc8c3be, 
+                    fontSize: 30,
+                }
+
+            );
+            
+            app.stage.addChild(text1);
+            app.stage.addChild(text2);
+            app.stage.addChild(text3);
+            app.stage.addChild(text4);
+            app.stage.addChild(text5);
+            // Main scene end
+
+            // About
+            intro = new PIXI.Container();
+            intro.visible = false;
+            app.stage.addChild(intro);
+            
+            let BlackScene = new PIXI.Graphics();
+            BlackScene.beginFill(0x9f699d);
+            BlackScene.drawRect(0, 0, app.view.width, app.view.height);
+            BlackScene.endFill();
+            intro.addChild(BlackScene);
+
+            let me = new PIXI.Sprite.from("img/Pixel_ME.png");
+            me.x = intro.width * 0.07;
+            me.y = intro.height * 0.06;
+            me.scale.set(0.8);
+            intro.addChild(me);
+
+            text6 = new PIXI.Text("Name: Josh Lin (Losing Josh fight)\n\nBirth: 1999/09/07\n\nHobbies: workout, exercise, music, coding\n\nSchool: NKNU-SE\n\nGrade: 3rd");
+            text6.x = intro.width * 0.1;
+            text6.y = intro.height * 0.43;
+            text6.style = new PIXI.TextStyle(
+                {
+                    fontFamily: '\'Arcade\', monospace', 
+                    fill: 0xc8c3be, 
+                    fontSize: 35,
+                }
+            );
+            BlackScene.addChild(text6);
+            // About
+
+            // Works
+            intro2 = new PIXI.Container();
+            intro2.visible = false;
+            app.stage.addChild(intro2);
+            
+            let BlackScene2 = new PIXI.Graphics();
+            BlackScene2.beginFill(0x6b7ea2);
+            BlackScene2.drawRect(0, 0, app.view.width, app.view.height);
+            BlackScene2.endFill();
+            intro2.addChild(BlackScene2);
+
+            let maze = new PIXI.Sprite.from("img/maze.png");
+            maze.x = intro2.width * 0.1;
+            maze.y = intro2.height * 0.3;
+            maze.scale.set(0.8);
+            intro2.addChild(maze);
+
+            let testbank = new PIXI.Sprite.from("img/testbank.png");
+            testbank.x = intro2.width * 0.3;
+            testbank.y = intro2.height * 0.3;
+            testbank.scale.set(0.8);
+            intro2.addChild(testbank);
+
+            let kla = new PIXI.Sprite.from("img/kla.png");
+            kla.x = intro2.width * 0.5;
+            kla.y = intro2.height * 0.3;
+            kla.scale.set(0.8);
+            intro2.addChild(kla);
+
+            text6 = new PIXI.Text("Works: ");
+            text6.x = intro2.width * 0.05;
+            text6.y = intro2.height * 0.1;
+            text6.style = new PIXI.TextStyle(
+                {
+                    fontFamily: '\'Arcade\', monospace', 
+                    fill: 0x212121, 
+                    fontSize: 55,
+                }
+            );
+            BlackScene2.addChild(text6);
+            
+            text7 = new PIXI.Text("Maze");
+            text7.x = intro2.width * 0.105;
+            text7.y = intro2.height * 0.6;
+            text7.interactive = true;
+            text7.accessible = true;
+            text7.buttonMode = true;
+            text7.on('click', function () {
+                window.open('https://cip.nknu.edu.tw/myMaze/Project_Maze/');
+            });
+            text7.style = new PIXI.TextStyle(
+                {
+                    fontFamily: '\'Arcade\', monospace', 
+                    fill: 0xc8c3be, 
+                    fontSize: 37,
+                    align: "center",
+                }
+            );
+            BlackScene2.addChild(text7);
+
+            text7 = new PIXI.Text("testbank");
+            text7.x = intro2.width * 0.305;
+            text7.y = intro2.height * 0.6;
+            text7.interactive = true;
+            text7.accessible = true;
+            text7.buttonMode = true;
+            text7.on('click', function () {
+                window.open('https://cip.nknu.edu.tw/myMaze/Project_Maze/TestBank');
+            });
+            text7.style = new PIXI.TextStyle(
+                {
+                    fontFamily: '\'Arcade\', monospace', 
+                    fill: 0xc8c3be, 
+                    fontSize: 37,
+                    align: "center",
+                }
+            );
+            BlackScene2.addChild(text7);
+
+            text7 = new PIXI.Text("myKLA");
+            text7.x = intro2.width * 0.505;
+            text7.y = intro2.height * 0.6;
+            text7.interactive = true;
+            text7.accessible = true;
+            text7.buttonMode = true;
+            text7.on('click', function () {
+                window.open('https://cip.nknu.edu.tw/myKLA');
+            });
+            text7.style = new PIXI.TextStyle(
+                {
+                    fontFamily: '\'Arcade\', monospace', 
+                    fill: 0xc8c3be, 
+                    fontSize: 37,
+                    align: "center",
+                }
+            );
+            BlackScene2.addChild(text7);
+            // Works
+            
+            // Social
+            intro3 = new PIXI.Container();
+            intro3.visible = false;
+            app.stage.addChild(intro3);
+            
+            let BlackScene3 = new PIXI.Graphics();
+            BlackScene3.beginFill(0x9e8156);
+            BlackScene3.drawRect(0, 0, app.view.width, app.view.height);
+            BlackScene3.endFill();
+            intro3.addChild(BlackScene3);
+
+            text6 = new PIXI.Text("Social Media: ");
+            text6.x = intro3.width * 0.05;
+            text6.y = intro3.height * 0.1;
+            text6.style = new PIXI.TextStyle(
+                {
+                    fontFamily: '\'Arcade\', monospace', 
+                    fill: 0x212121, 
+                    fontSize: 55,
+                }
+            );
+            BlackScene3.addChild(text6);
+            
+            
+            text6 = new PIXI.Text("Facebook: \n\nInstagram: \n\nMedium:");
+            text6.x = intro3.width * 0.1;
+            text6.y = intro3.height * 0.43;
+            text6.style = new PIXI.TextStyle(
+                {
+                    fontFamily: '\'Arcade\', monospace', 
+                    fill: 0xc8c3be, 
+                    fontSize: 40,
+                }
+            );
+            BlackScene3.addChild(text6);
+            
+            text6 = new PIXI.Text("Josh Lin");
+            text6.x = intro3.width * 0.3;
+            text6.y = intro3.height * 0.43;
+            text6.interactive = true;
+            text6.accessible = true;
+            text6.buttonMode = true;
+            text6.on('click', function () {
+                window.open('https://www.facebook.com/people/Josh-Lin/100000105046744/');
+            });
+            text6.style = new PIXI.TextStyle(
+                {
+                    fontFamily: '\'Arcade\', monospace', 
+                    fill: 0x212121, 
+                    fontSize: 40,
+                }
+            );
+            BlackScene3.addChild(text6);
+
+            text6 = new PIXI.Text("87osh");
+            text6.x = intro3.width * 0.3;
+            text6.y = intro3.height * 0.567;
+            text6.interactive = true;
+            text6.accessible = true;
+            text6.buttonMode = true;
+            text6.on('click', function () {
+                window.open('https://www.instagram.com/87osh/');
+            });
+            text6.style = new PIXI.TextStyle(
+                {
+                    fontFamily: '\'Arcade\', monospace', 
+                    fill: 0x212121, 
+                    fontSize: 40,
+                }
+            );
+            BlackScene3.addChild(text6);
+
+            text6 = new PIXI.Text("jokezxcv");
+            text6.x = intro3.width * 0.3;
+            text6.y = intro3.height * 0.7;
+            text6.interactive = true;
+            text6.accessible = true;
+            text6.buttonMode = true;
+            text6.on('click', function () {
+                window.open('https://jokezxcv.medium.com/');
+            });
+            text6.style = new PIXI.TextStyle(
+                {
+                    fontFamily: '\'Arcade\', monospace', 
+                    fill: 0x212121, 
+                    fontSize: 40,
+                }
+            );
+            BlackScene3.addChild(text6);
+            // Social
+
+            // contact
+            intro4 = new PIXI.Container();
+            intro4.visible = false;
+            app.stage.addChild(intro4);
+            
+            let BlackScene4 = new PIXI.Graphics();
+            BlackScene4.beginFill(0xa15555);
+            BlackScene4.drawRect(0, 0, app.view.width, app.view.height);
+            BlackScene4.endFill();
+            intro4.addChild(BlackScene4);
+
+            text6 = new PIXI.Text("Information:");
+            text6.x = intro4.width * 0.05;
+            text6.y = intro4.height * 0.1;
+            text6.style = new PIXI.TextStyle(
+                {
+                    fontFamily: '\'Arcade\', monospace', 
+                    fill: 0x212121, 
+                    fontSize: 55,
+                }
+            );
+            BlackScene4.addChild(text6);
+
+            text6 = new PIXI.Text("E-mail(P): jokezxcv@gmail.com\n\nE-mail(S): 410777026@mail.nknu.edu.tw");
+            text6.x = intro4.width * 0.1;
+            text6.y = intro4.height * 0.3;
+            text6.style = new PIXI.TextStyle(
+                {
+                    fontFamily: '\'Arcade\', monospace', 
+                    fill: 0xc8c3be, 
+                    fontSize: 40,
+                }
+            );
+            BlackScene4.addChild(text6);
+            // contact
+
+            
+
+
+            // pre-load
+            app.loader.add("Bot_idle", "Bot/idle.png");
+            app.loader.add("Bot_idle_L", "Bot/idle_L.png");
+            app.loader.add("Bot_hit", "Bot/hit.png");
+            app.loader.add("Bot_hit_L", "Bot/hit_L.png");
+            app.loader.add("Bot_run", "Bot/run.png");
+            app.loader.add("Bot_run_L", "Bot/run_L.png");
+            app.loader.add("Bot_attack", "Bot/attack.png");
+            app.loader.add("Bot_attack_L", "Bot/attack_L.png");
+            app.loader.add("Bot_charge", "Bot/charge.png");
+            app.loader.add("Bot_charge_L", "Bot/charge_L.png");
+            app.loader.add("Bot_trans", "Bot/trans.png");
+            app.loader.add("Bot_trans_L", "Bot/trans_L.png");
+            
+
+            app.loader.add("UFO", "Scene/Scene_UFO_ani.png");
+
+            app.loader.load(doneLoading);
+            
+            
+            
+
+
+            // keysEventListener
+            window.addEventListener("keydown", keysDown);        
+            window.addEventListener("keyup", keysUp);       
+
+            
+        }
+
+
+        function doneLoading(e){
+            createPlayerSheet();
+            createPlayer();
+            app.ticker.add(gameLoop);
+        }
+
+        function createPlayerSheet(){
+            let ssheet = new PIXI.BaseTexture.from(app.loader.resources["Bot_idle"].url);
+            let ssheet_L = new PIXI.BaseTexture.from(app.loader.resources["Bot_idle_L"].url);
+            let ssheet_run = new PIXI.BaseTexture.from(app.loader.resources["Bot_run"].url);
+            let ssheet_run_L = new PIXI.BaseTexture.from(app.loader.resources["Bot_run_L"].url);
+            let ssheet_hit = new PIXI.BaseTexture.from(app.loader.resources["Bot_hit"].url);
+            let ssheet_hit_L = new PIXI.BaseTexture.from(app.loader.resources["Bot_hit_L"].url);
+            let ssheet_charge = new PIXI.BaseTexture.from(app.loader.resources["Bot_charge"].url);
+            let ssheet_charge_L = new PIXI.BaseTexture.from(app.loader.resources["Bot_charge_L"].url);
+            let ssheet_trans = new PIXI.BaseTexture.from(app.loader.resources["Bot_trans"].url);
+            let ssheet_trans_L = new PIXI.BaseTexture.from(app.loader.resources["Bot_trans_L"].url);
+            let ssheet_attack = new PIXI.BaseTexture.from(app.loader.resources["Bot_attack"].url);
+            let ssheet_attack_L = new PIXI.BaseTexture.from(app.loader.resources["Bot_attack_L"].url);
+            let Usheet = new PIXI.BaseTexture.from(app.loader.resources["UFO"].url);
+
+            let w = 378;
+            let h = 117;
+
+            playerSheet["boom"] = [
+                new PIXI.Texture.from("Smoke/FX001/FX001_06.png"),
+                new PIXI.Texture.from("Smoke/FX001/FX001_01.png"),
+                new PIXI.Texture.from("Smoke/FX001/FX001_02.png"),
+                new PIXI.Texture.from("Smoke/FX001/FX001_03.png"),
+                new PIXI.Texture.from("Smoke/FX001/FX001_04.png"),
+                new PIXI.Texture.from("Smoke/FX001/FX001_05.png"),
+                new PIXI.Texture.from("Smoke/FX001/FX001_06.png"),
+            ]
+
+            playerSheet["UFO_idle"] = [
+                new PIXI.Texture(Usheet, new PIXI.Rectangle(0, 204, 150, 68))
+            ]
+            
+            playerSheet["UFO"] = [
+                new PIXI.Texture(Usheet, new PIXI.Rectangle(0, 204, 150, 68)),
+                new PIXI.Texture(Usheet, new PIXI.Rectangle(0, 68, 150, 68)),
+                new PIXI.Texture(Usheet, new PIXI.Rectangle(0, 136, 150, 68)),
+                new PIXI.Texture(Usheet, new PIXI.Rectangle(0, 0, 150, 68)),
+            ]
+
+            playerSheet["idle"] = [
+                new PIXI.Texture(ssheet, new PIXI.Rectangle(0, 0, w, h)),
+                new PIXI.Texture(ssheet, new PIXI.Rectangle(0, h * 1, w, h)),
+                new PIXI.Texture(ssheet, new PIXI.Rectangle(0, h * 2, w, h)),
+                new PIXI.Texture(ssheet, new PIXI.Rectangle(0, h * 3, w, h)),
+                new PIXI.Texture(ssheet, new PIXI.Rectangle(0, h * 4, w, h))
+            ];
+
+            playerSheet["idle_L"] = [
+                new PIXI.Texture(ssheet_L, new PIXI.Rectangle(0, 0, w, h)),
+                new PIXI.Texture(ssheet_L, new PIXI.Rectangle(0, h * 1, w, h)),
+                new PIXI.Texture(ssheet_L, new PIXI.Rectangle(0, h * 2, w, h)),
+                new PIXI.Texture(ssheet_L, new PIXI.Rectangle(0, h * 3, w, h)),
+                new PIXI.Texture(ssheet_L, new PIXI.Rectangle(0, h * 4, w, h))
+            ];
+
+            playerSheet["run"] = [
+                new PIXI.Texture(ssheet_run, new PIXI.Rectangle(0, 0, w, h)),
+                new PIXI.Texture(ssheet_run, new PIXI.Rectangle(0, h * 1, w, h)),
+                new PIXI.Texture(ssheet_run, new PIXI.Rectangle(0, h * 2, w, h)),
+                new PIXI.Texture(ssheet_run, new PIXI.Rectangle(0, h * 3, w, h)),
+                new PIXI.Texture(ssheet_run, new PIXI.Rectangle(0, h * 4, w, h)),
+                new PIXI.Texture(ssheet_run, new PIXI.Rectangle(0, h * 5, w, h)),
+                new PIXI.Texture(ssheet_run, new PIXI.Rectangle(0, h * 6, w, h)),
+                new PIXI.Texture(ssheet_run, new PIXI.Rectangle(0, h * 7, w, h)),
+                new PIXI.Texture(ssheet, new PIXI.Rectangle(0, 0, w, h))
+            ];
+
+
+            playerSheet["run_L"] = [
+                new PIXI.Texture(ssheet_run_L, new PIXI.Rectangle(0, 0, w, h)),
+                new PIXI.Texture(ssheet_run_L, new PIXI.Rectangle(0, h * 1, w, h)),
+                new PIXI.Texture(ssheet_run_L, new PIXI.Rectangle(0, h * 2, w, h)),
+                new PIXI.Texture(ssheet_run_L, new PIXI.Rectangle(0, h * 3, w, h)),
+                new PIXI.Texture(ssheet_run_L, new PIXI.Rectangle(0, h * 4, w, h)),
+                new PIXI.Texture(ssheet_run_L, new PIXI.Rectangle(0, h * 5, w, h)),
+                new PIXI.Texture(ssheet_run_L, new PIXI.Rectangle(0, h * 6, w, h)),
+                new PIXI.Texture(ssheet_run_L, new PIXI.Rectangle(0, h * 7, w, h)),
+                new PIXI.Texture(ssheet_L, new PIXI.Rectangle(0, 0, w, h))
+            ];
+
+            playerSheet["hit"] = [
+                new PIXI.Texture(ssheet_hit, new PIXI.Rectangle(0, 0, w, h)),
+                new PIXI.Texture(ssheet_hit, new PIXI.Rectangle(0, h * 1, w, h)),
+            ];
+
+            playerSheet["hit_L"] = [
+                new PIXI.Texture(ssheet_hit_L, new PIXI.Rectangle(0, 0, w, h)),
+                new PIXI.Texture(ssheet_hit_L, new PIXI.Rectangle(0, h * 1, w, h)),
+            ];
+
+                
+            playerSheet["attack"] = [
+                new PIXI.Texture(ssheet_trans, new PIXI.Rectangle(0, 0, w, h)),
+                new PIXI.Texture(ssheet_trans, new PIXI.Rectangle(0, h * 1, w, h)),
+                new PIXI.Texture(ssheet_charge, new PIXI.Rectangle(0, 0, w, h)),
+                new PIXI.Texture(ssheet_charge, new PIXI.Rectangle(0, h * 1, w, h)),
+                new PIXI.Texture(ssheet_charge, new PIXI.Rectangle(0, h * 2, w, h)),
+                new PIXI.Texture(ssheet_charge, new PIXI.Rectangle(0, h * 3, w, h)),
+                new PIXI.Texture(ssheet_charge, new PIXI.Rectangle(0, 0, w, h)),
+                new PIXI.Texture(ssheet_charge, new PIXI.Rectangle(0, h * 1, w, h)),
+                new PIXI.Texture(ssheet_charge, new PIXI.Rectangle(0, h * 2, w, h)),
+                new PIXI.Texture(ssheet_charge, new PIXI.Rectangle(0, h * 3, w, h)),
+                new PIXI.Texture(ssheet_attack, new PIXI.Rectangle(0, 0, w, h)),
+                new PIXI.Texture(ssheet_attack, new PIXI.Rectangle(0, h * 1, w, h)),
+                new PIXI.Texture(ssheet_attack, new PIXI.Rectangle(0, h * 2, w, h)),
+                new PIXI.Texture(ssheet_attack, new PIXI.Rectangle(0, h * 3, w, h)),
+                new PIXI.Texture(ssheet_attack, new PIXI.Rectangle(0, h * 4, w, h)),
+                new PIXI.Texture(ssheet_attack, new PIXI.Rectangle(0, h * 5, w, h)),
+                new PIXI.Texture(ssheet_attack, new PIXI.Rectangle(0, h * 6, w, h)),
+                new PIXI.Texture(ssheet_attack, new PIXI.Rectangle(0, h * 7, w, h)),
+                new PIXI.Texture(ssheet, new PIXI.Rectangle(0, 0, w, h))
+            ];
+
+            playerSheet["attack_L"] = [
+                new PIXI.Texture(ssheet_trans_L, new PIXI.Rectangle(0, 0, w, h)),
+                new PIXI.Texture(ssheet_trans_L, new PIXI.Rectangle(0, h * 1, w, h)),
+                new PIXI.Texture(ssheet_charge_L, new PIXI.Rectangle(0, 0, w, h)),
+                new PIXI.Texture(ssheet_charge_L, new PIXI.Rectangle(0, h * 1, w, h)),
+                new PIXI.Texture(ssheet_charge_L, new PIXI.Rectangle(0, h * 2, w, h)),
+                new PIXI.Texture(ssheet_charge_L, new PIXI.Rectangle(0, h * 3, w, h)),
+                new PIXI.Texture(ssheet_charge_L, new PIXI.Rectangle(0, 0, w, h)),
+                new PIXI.Texture(ssheet_charge_L, new PIXI.Rectangle(0, h * 1, w, h)),
+                new PIXI.Texture(ssheet_charge_L, new PIXI.Rectangle(0, h * 2, w, h)),
+                new PIXI.Texture(ssheet_charge_L, new PIXI.Rectangle(0, h * 3, w, h)),
+                new PIXI.Texture(ssheet_attack_L, new PIXI.Rectangle(0, 0, w, h)),
+                new PIXI.Texture(ssheet_attack_L, new PIXI.Rectangle(0, h * 1, w, h)),
+                new PIXI.Texture(ssheet_attack_L, new PIXI.Rectangle(0, h * 2, w, h)),
+                new PIXI.Texture(ssheet_attack_L, new PIXI.Rectangle(0, h * 3, w, h)),
+                new PIXI.Texture(ssheet_attack_L, new PIXI.Rectangle(0, h * 4, w, h)),
+                new PIXI.Texture(ssheet_attack_L, new PIXI.Rectangle(0, h * 5, w, h)),
+                new PIXI.Texture(ssheet_attack_L, new PIXI.Rectangle(0, h * 6, w, h)),
+                new PIXI.Texture(ssheet_attack_L, new PIXI.Rectangle(0, h * 7, w, h)),
+                new PIXI.Texture(ssheet_L, new PIXI.Rectangle(0, 0, w, h))
+            ];
+        }
+
+        let idle;
+        let side = 1;
+
+        function createPlayer(){
+            player = new PIXI.AnimatedSprite(playerSheet.idle);
+            player.anchor.set(0.5);
+            player.animationSpeed = 0.32;
+            player.infinite = true;
+            player.loop = false;
+            idle = 1;
+            player.x = app.view.width * 0.15;
+            player.y = app.view.height * 0.75;
+            app.stage.addChild(player);
+            player.play();
+
+            ufo = new PIXI.AnimatedSprite(playerSheet.UFO_idle);
+            ufo.anchor.set(0.5);
+            ufo.animationSpeed = 0.05;
+            ufo.loop = false;
+            ufo.width = 140;
+            ufo.height = 60;
+            ufo.x = 980;
+            ufo.y = 555;
+            app.stage.addChild(ufo);
+
+            boom = new PIXI.AnimatedSprite(playerSheet.boom);
+            boom.anchor.set(0.5);
+            boom.animationSpeed = 0.32;
+            boom.width = 150;
+            boom.height = 150;
+            boom.loop = false;
+            app.stage.addChild(boom);
+
+            boom2 = new PIXI.AnimatedSprite(playerSheet.boom);
+            boom2.anchor.set(0.5);
+            boom2.animationSpeed = 0.32;
+            boom2.width = 200;
+            boom2.height = 200;
+            boom2.loop = false;
+            app.stage.addChild(boom2);
+
+        }
+
+
+        function keysDown(e){
+            keys[e.keyCode] = true;
+        }
+        
+        function keysUp(e){
+            keys[e.keyCode] = false;
+        }
+        
+        
+        let floor = 1;
+        let value = {};
+        let v32 = 0;
+        let v37 = 0;
+        let v38 = 0;
+        let v39 = 0;
+        let v40 = 0;
+        let v65 = 0;
+
+        let idling = 0;
+        let introV = 0;
+        let falls = 0;
+        let height;
+
+        function boxesIntersect(a, b){
+            var ab = a.getBounds();
+            var bb = b.getBounds();
+            return ab.x + ab.width > bb.x && ab.x < bb.x + bb.width && ab.y + ab.height > bb.y && ab.y < bb.y + bb.height;
+        }
+
+        function gameLoop(){
+            if (falls){
+                height = (floor - 1) * 60;
+                height /= 4; 
+                setTimeout("player.y += height",200);
+                setTimeout("player.y += height",350);
+                setTimeout("player.y += height",550);
+                setTimeout("player.y += height",800);
+                setTimeout("player.textures = playerSheet.hit_L;",800);
+                setTimeout("player.play()",800);
+                setTimeout("player.textures = playerSheet.idle_L;",950);
+                setTimeout("player.play()",950);
+
+                setTimeout("ufo.y += height",1000);
+                setTimeout("ufo.y += height",1200);
+                setTimeout("ufo.y += height",1400);
+                setTimeout("ufo.y += height",1600);
+
+                floor = 1;
+                falls = 0;
+            }
+
+            if (v32 == 0 && v37 == 0 && v39 == 0 && v65 == 0 && idling == 0){
+                idling = 1;
+                if (side){
+                    player.textures = playerSheet.idle;
+                    player.loop = true;
+                    player.play();
+                }else if (!side){
+                    player.textures = playerSheet.idle_L;
+                    player.loop = true;
+                    player.play();
+                }
+
+            }else if (v32 != 0 || v37 != 0 || v39 != 0 || v65 != 0){
+                idling = 0;
+            }
+            // keysDiv.innerHTML = JSON.stringify(keys);
+
+            // ufo up and down
+            if (player.x >= ufo.x - ufo.width / 2 && player.x <= ufo.x + ufo.width / 2){
+                
+                if (!ufo.playing){
+                    ufo.textures = playerSheet.UFO;
+                    ufo.play();
+                }
+                if (keys["38"]){
+                    if (floor == 4){
+                        return;
+                    }
+                    if (intro.visible || intro2.visible || intro3.visible || intro4.visible){
+                        intro.visible = false;
+                        intro2.visible = false;
+                        intro3.visible = false;
+                        intro4.visible = false;
+                        introV = 0;
+                    }
+                    if (idling == 1){
+                        player.y -= 30;
+                        ufo.y -= 30;
+                        setTimeout("player.y -= 30",100);
+                        setTimeout("ufo.y -= 30",100);
+                        floor += 1;
+                    }
+                    keys["38"] = false;
+                }
+                if (keys["40"]){
+                    if (floor == 1){
+                        return;
+                    }
+                    if (intro.visible || intro2.visible || intro3.visible || intro4.visible){
+                        intro.visible = false;
+                        intro2.visible = false;
+                        intro3.visible = false;
+                        intro4.visible = false;
+                        introV = 0;
+                    }
+                    if (idling == 1){
+                        player.y += 30;
+                        ufo.y += 30;
+                        setTimeout("player.y += 30",100);
+                        setTimeout("ufo.y += 30",100);
+                        floor -= 1;
+                    }
+                    keys["40"] = false; 
+                }
+                
+            }else{
+                ufo.textures = playerSheet.UFO_idle;
+                ufo.play();
+            }
+
+            if (keys["37"]){
+                if (player.x - 35 <= 60 || v37 == 1)
+                    return;
+
+                if (floor != 1){
+                    if (player.x - 70 <= ufo.x - ufo.width / 2){
+                        falls = 1;
+                    }
+                }
+                
+                if (intro.visible || intro2.visible || intro3.visible || intro4.visible){
+                    intro.visible = false;
+                    intro2.visible = false;
+                    intro3.visible = false;
+                    intro4.visible = false;
+                    introV = 0;
+                }
+                side = 0;
+                v37 = 1;
+                player.textures = playerSheet.run_L;
+                player.play();
+                setTimeout("player.x -= 70;",100);
+                setTimeout("v37 = 0 ",400);
+                
+            }
+            
+            if (keys["39"]){
+                if (player.x + 35 >= 1000 || v39 == 1){
+                    return;
+                }
+                if (intro.visible || intro2.visible || intro3.visible || intro4.visible){
+                    intro.visible = false;
+                    intro2.visible = false;
+                    intro3.visible = false;
+                    intro4.visible = false;
+                    introV = 0;
+                }
+                side = 1;
+                v39 = 1;
+                player.textures = playerSheet.run;
+                player.play();
+                setTimeout("player.x += 70;",100);
+                setTimeout("v39 = 0",400);
+                
+            }
+
+            if (keys["32"]){
+                if (v32 == 1)
+                    return;
+                
+                if (intro.visible || intro2.visible || intro3.visible || intro4.visible){
+                    intro.visible = false;
+                    intro2.visible = false;
+                    intro3.visible = false;
+                    intro4.visible = false;
+                    introV = 0;
+                }
+                if (side){
+                    v32 = 1;
+                    player.textures = playerSheet.run;
+                    player.y -= 60;
+                    player.play();
+                    setTimeout("player.y += 60;",200);
+                    setTimeout("v32 = 0",400);
+                }else if (side == 0){
+                    v32 = 1;
+                    player.textures = playerSheet.run_L;
+                    player.y -= 60;
+                    player.play();
+                    setTimeout("player.y += 60;",200);
+                    setTimeout("v32 = 0",400);
+                }
+            }
+
+            if (keys["65"]){
+                if (v65 == 1){
+                    return;
+                }
+                
+                if (!side){
+                    v65 = 1;
+                    player.textures = playerSheet.attack_L;
+                    player.play();
+                    setTimeout("v65 = 0", 1000);
+                }else if(side){
+                    v65 = 1;
+                    player.textures = playerSheet.attack;
+                    player.play();
+                    setTimeout("v65 = 0", 1000);
+                    if (boxesIntersect(player, boxes)){
+                        if (floor == 1){                            
+                            setTimeout("about();", 500);
+                        }else if (floor == 2){
+                            setTimeout("works();", 500);
+                        }else if (floor == 3){
+                            setTimeout("social();", 500);
+                        }else if (floor == 4){
+                            setTimeout("contact();", 500);
+                        }
+                        
+                        boom.x = boxes.x;
+                        boom.y = player.y;
+                        boom.textures = playerSheet.boom;
+                        setTimeout("boom.play();", 500);
+                        
+                        boom2.x = app.view.width * 0.15;
+                        boom2.y = app.view.height * 0.15;
+                        boom2.textures = playerSheet.boom;
+                        setTimeout("boom2.play();", 500);
+                    }
+                    
+                    
+                }
+            }
+
+        }   
+
+        function about(){
+            keys["65"] = false;
+            introV = 1;
+            intro.visible = true;
+        }
+
+        function works(){
+            keys["65"] = false;
+            introV = 1;
+            intro2.visible = true;
+        }
+
+        function social(){
+            keys["65"] = false;
+            introV = 1;
+            intro3.visible = true;
+        }
+
+        function contact(){
+            keys["65"] = false;
+            introV = 1;
+            intro4.visible = true;
+        }
+
+    </script>
+
+</head>
+<body>
+    <div id = "cont">
+        <div id = "canvas"></div>
+    </div>
+    <label style = "font-family: 'Arcade';"></label>
+</body>
+</html>
