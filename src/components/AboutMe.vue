@@ -2,20 +2,16 @@
     <article>
         <section class="bigText">
             <p class="skills">
-                <span class="title">About Me</span> <br />
-                <span class="light">System Architecture Design</span><br />
-                Frontend Development <br />
-                <span class="hint">Modeling UML</span><br />
-                <span class="light">DevOps</span><span class="dot">.</span>
+                <span class="title">{{ title }}</span> <br />
+                <span>{{ skill1 }}<br /></span>
+                <span>{{ skill2 }}<br /></span>
+                <span>{{ skill3 }}<br /></span>
+                <span>{{ skill4 }}</span>
+                <span class="dot">.</span>
             </p>
         </section>
         <section class="content">
-            <p class="intro">
-                I specialize in software development for both frontend and backend, with experience <span class="trans"> in</span> designing and developing environme<span class="trans">nts and</span>
-                systems. Graduating from the <span class="trans">Software</span> Engineering department, I have <span class="trans">not only honed</span> my software skills but also
-                <span class="trans">stayed updated on</span> hardware and technology<span class="trans">-related advancements.</span> My aspiration is<span class="trans"> to remain a perpetual</span>
-                learner and <span class="trans">embrace new knowledge, evolving</span> into a <span class="trans">well-rounded software developer.</span>
-            </p>
+            <p class="intro">{{ intro }}<span class="dot">.</span></p>
         </section>
     </article>
 </template>
@@ -23,6 +19,16 @@
 <script scoped>
 export default {
     name: "AboutMe",
+    data() {
+        return {
+            title: "About Me",
+            skill1: "System Architecture Design",
+            skill2: "Frontend Development",
+            skill3: "Modeling UML",
+            skill4: "DevOps",
+            intro: "I specialize in software development for both frontend and backend, with experience in designing and developing environments and systems. Graduating from the Software Engineering department, I have not only honed my software skills but also stayed updated on hardware and technology-related advancements. My aspiration is to remain a perpetual learner and embrace new knowledge, evolving into a well-rounded software developer",
+        };
+    },
 };
 </script>
 
@@ -47,27 +53,24 @@ article {
         position: relative;
 
         .intro {
-            color: #d6d6d6;
+            background: linear-gradient(to right, #fcd8cc, #d0f1fa);
+            background-clip: text;
+            color: transparent;
             font-size: 15px;
             line-height: 24px;
             font-weight: 300;
             text-align: justify;
             margin: 0;
             transition: all 0.5s;
-            cursor: pointer;
-            .trans {
-                color: #222222;
-                transition: all 0.5s;
+
+            .dot {
+                color: #e2b714;
             }
         }
         .intro:hover {
-            color: #ffffff;
             scale: 1.06;
-            .trans {
-                color: #ffffff;
-            }
+            color: #fde8e0;
         }
-
     }
 
     .bigText {
@@ -78,33 +81,7 @@ article {
         align-items: flex-start;
         justify-content: flex-start;
         position: relative;
-        .shadow {
-            text-align: right;
-            user-select: none;
-            position: absolute;
-            color: #cab888bc;
-            font-weight: 900;
-            font-size: 30px;
-            line-height: 60px;
-            margin: 0;
-            margin-top: 28px;
-            margin-left: 30px;
-            z-index: 1;
-        }
-
-        .greeting {
-            align-self: flex-end;
-            user-select: none;
-            font-weight: bold;
-            font-size: 30px;
-            line-height: 60px;
-            margin: 0;
-            margin-bottom: 10px;
-            z-index: 2;
-        }
-
         .skills {
-            color: #e0c256;
             text-align: right;
             user-select: none;
             font-size: 24px;
@@ -113,19 +90,17 @@ article {
             margin: 0;
             margin-bottom: 30px;
             z-index: 2;
+            background: linear-gradient(to left, #fcd8cc, #b2edfb);
+            background-clip: text;
+            color: transparent;
             .title {
-                font-size: 18px;
-                font-weight: 600;
-                font-family: Courier;
+                font-size: 38px;
+                font-weight: 700;
+                letter-spacing: 2px;
+                color: #e2b714;
             }
             .dot {
                 color: #e2b714;
-            }
-            .light {
-                color: #dfdfdf;
-            }
-            .hint {
-                color: #9e9a9a;
             }
         }
     }
@@ -148,11 +123,9 @@ article {
                 font-size: 19px;
                 text-align: left;
                 line-height: 26px;
-                color: #777;
-
-                .trans {
-                    color: #777;
-                }
+                background: linear-gradient(to left, #fcd8cc, #d0f1fa);
+                background-clip: text;
+                color: transparent;
             }
         }
 

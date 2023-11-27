@@ -2,16 +2,14 @@
     <main>
         <section class="picture">
             <img src="../assets/logo.png" alt="" />
-            <!-- <img src="../assets/my-pic.png" alt="" /> -->
         </section>
         <section class="content">
-            <p class="shadow">SoftWare Engineer</p>
-            <!-- <p class="chineseName">ChiaHsuan</p> -->
-            <div class="greeting">Hi! this is</div>
-            <p class="name">Josh<span class="dot">.</span></p>
-            <p class="intro">
-                An enthusiastic software engineer passionate about technological knowledge, enjoys sports and games, and continuously enhances development skills while expanding horizons.
+            <p class="shadow">{{ shadow }}</p>
+            <div class="greeting">{{ greeting }}</div>
+            <p class="name">
+                {{ name }}<span class="dot">{{ dot }}</span>
             </p>
+            <p class="intro">{{ intro }}</p>
         </section>
     </main>
 </template>
@@ -19,6 +17,15 @@
 <script>
 export default {
     name: "MainContent",
+    data() {
+        return {
+            shadow: "SoftWare Engineer",
+            greeting: "Hi! this is",
+            name: "Josh",
+            dot: ".",
+            intro: "An enthusiastic software engineer passionate about technological knowledge, enjoys sports and games, and continuously enhances development skills while expanding horizons.",
+        };
+    },
 };
 </script>
 
@@ -87,7 +94,7 @@ main {
             font-size: 15px;
             line-height: 24px;
             font-weight: 300;
-            text-align: justify;
+            text-align: left;
             margin: 0;
             transition: all 1.5s;
         }
@@ -157,6 +164,5 @@ main {
         width: 90%;
         object-fit: cover;
     }
-
 }
 </style>

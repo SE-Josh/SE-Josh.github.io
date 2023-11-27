@@ -31,6 +31,7 @@ body {
     flex-direction: column;
     background-color: #050505;
     color: #ffffff;
+    user-select: none;
 }
 #app > * {
     height: 100vh;
@@ -49,6 +50,10 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #ffffff;
+    background: #f9e18b;
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: rgb(255, 200, 0);
 }
 </style>
